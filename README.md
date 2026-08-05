@@ -38,3 +38,6 @@ Then visit `http://localhost:8080`.
 - `assets/og-card.svg` — social sharing image
 - `wrangler.jsonc` — Cloudflare Workers static-assets configuration
 - `package.json` — pinned Wrangler tooling and deployment scripts
+## Deployment status
+
+Cloudflare automatically deploys the production Worker from the `main` branch.
