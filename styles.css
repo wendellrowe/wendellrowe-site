@@ -301,3 +301,117 @@ footer small { grid-column: 1 / -1; color: #55534f; font-size: 8px; letter-spaci
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
   .cursor-dot, .cursor-ring, #constellation { display: none; }
 }
+
+/* ------------------------------------------------------------------
+   Additions: proof metrics, timeline scope, credentials, direct contact
+   ------------------------------------------------------------------ */
+
+.proof-band {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0 0 70px;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.proof-band > div {
+  padding: 34px 30px 30px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.proof-band dt {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.6vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--gold);
+}
+.proof-band dd {
+  margin: 16px 0 0;
+  max-width: 220px;
+  color: #8c8981;
+  font-size: 10px;
+  line-height: 1.7;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+}
+
+.impact-proof {
+  margin-top: 20px !important;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--ivory) !important;
+  font-size: 12px !important;
+  line-height: 1.75 !important;
+}
+
+.timeline .tl-org { color: var(--ivory); font-size: 13px; letter-spacing: .04em; }
+.timeline .tl-scope { margin-top: 10px; color: #77746e; font-size: 12px; line-height: 1.75; max-width: 460px; }
+
+.credentials { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.credentials li { padding: 24px 0; border-bottom: 1px solid var(--line); color: #77746e; font-size: 12px; line-height: 1.7; }
+.credentials b {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.contact-direct { margin-top: 46px; }
+.contact-address {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 0 18px !important;
+  color: var(--ivory) !important;
+  font-size: 14px;
+  letter-spacing: .04em;
+}
+.copy-email {
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--gold);
+  font-size: 8px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .3s, color .3s;
+}
+.copy-email:hover { background: var(--gold); color: var(--black); }
+.copy-email[data-copied="true"] { background: var(--gold); color: var(--black); }
+.contact-elsewhere {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 0 !important;
+  color: #55524d !important;
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.contact-elsewhere a { color: #77746e; transition: color .3s; }
+.contact-elsewhere a:hover { color: var(--gold); }
+
+/* Unfilled FILL_ placeholders are flagged by script.js so they cannot ship unnoticed. */
+.is-placeholder {
+  outline: 2px dashed #ff5f5f;
+  outline-offset: 3px;
+  background: rgba(255, 95, 95, .09);
+  color: #ff8b8b !important;
+  -webkit-text-stroke: 0;
+}
+
+@media (max-width: 1100px) {
+  .proof-band { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  .proof-band { grid-template-columns: 1fr; margin-bottom: 50px; }
+  .proof-band > div { padding: 26px 22px; }
+  .contact-address { flex-direction: column; gap: 12px; }
+}

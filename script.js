@@ -56,6 +56,33 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
   document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
 
+  document.querySelectorAll('.copy-email').forEach(btn => {
+    const target = document.querySelector(btn.dataset.copy);
+    if (!target || !navigator.clipboard) return;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(target.textContent.trim());
+        const original = btn.textContent;
+        btn.textContent = 'Copied';
+        btn.dataset.copied = 'true';
+        setTimeout(() => {
+          btn.textContent = original;
+          delete btn.dataset.copied;
+        }, 2000);
+      } catch {
+        /* clipboard blocked — the address is still selectable on screen */
+      }
+    });
+  });
+
+  // Dev guard: loudly flag any FILL_ placeholder that has not been replaced yet.
+  document.querySelectorAll('body *:not(script):not(style)').forEach(el => {
+    if (el.children.length) return;
+    if (/FILL_[A-Z0-9_]+/.test(el.textContent)) el.classList.add('is-placeholder');
+    const href = el.getAttribute?.('href');
+    if (href && /FILL_/.test(href)) el.classList.add('is-placeholder');
+  });
+
   if (!reduceMotion && window.matchMedia('(pointer:fine)').matches) {
     let mouseX = -100, mouseY = -100, ringX = -100, ringY = -100;
     window.addEventListener('mousemove', (event) => {
@@ -154,11 +181,11 @@
   }
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      cancelAnimationFrame(animationFrameId);
-      return;
-    }
-    animationFrameId = requestAnimationFrame(animate);
+    // Always clear the pending frame first: without this, a fast hide/show
+    // cycle leaves a second animate() loop running alongside the first.
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = 0;
+    if (!document.hidden) animationFrameId = requestAnimationFrame(animate);
   });
 
   resize();
