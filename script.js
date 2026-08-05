@@ -126,7 +126,10 @@
     }));
   }
 
+  let animationFrameId = 0;
+
   function animate() {
+    if (document.hidden) return;
     ctx.clearRect(0, 0, width, height);
     particles.forEach((p, i) => {
       p.x += p.vx; p.y += p.vy;
@@ -147,8 +150,18 @@
         }
       }
     });
-    requestAnimationFrame(animate);
+    animationFrameId = requestAnimationFrame(animate);
   }
-  resize(); animate();
-  window.addEventListener('resize', resize);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      cancelAnimationFrame(animationFrameId);
+      return;
+    }
+    animationFrameId = requestAnimationFrame(animate);
+  });
+
+  resize();
+  animate();
+  window.addEventListener('resize', resize, { passive: true });
 })();

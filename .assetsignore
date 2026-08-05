@@ -8,3 +8,5 @@ node_modules/
 .git/
 .wrangler/
 .dev.vars*
+src/
+licenses/
