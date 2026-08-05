@@ -1,0 +1,12 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="r"><stop stop-color="#2b220f"/><stop offset="1" stop-color="#050505"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#r)"/>
+  <circle cx="920" cy="315" r="220" fill="none" stroke="#c6a75e" stroke-opacity=".18"/>
+  <circle cx="920" cy="315" r="165" fill="none" stroke="#c6a75e" stroke-opacity=".12"/>
+  <text x="90" y="230" fill="#eee9df" font-family="Georgia, serif" font-size="92" letter-spacing="4">WENDELL</text>
+  <text x="90" y="325" fill="none" stroke="#c6a75e" font-family="Georgia, serif" font-size="92" letter-spacing="4">ROWE</text>
+  <text x="96" y="395" fill="#c6a75e" font-family="Arial, sans-serif" font-size="18" letter-spacing="9">OPERATIONS · SCALE · LEGACY</text>
+  <text x="865" y="355" fill="#c6a75e" font-family="Georgia, serif" font-size="105" letter-spacing="-8">WR</text>
+</svg>

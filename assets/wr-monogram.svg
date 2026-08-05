@@ -1,0 +1,7 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="90" cy="90" r="85" stroke="#C6A75E" stroke-width="2"/>
+  <circle cx="90" cy="90" r="72" stroke="#C6A75E" stroke-opacity=".38"/>
+  <path d="M45 55L61 125L90 69L119 125L135 55" stroke="#EDE7DA" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M88 55H106C127 55 138 65 138 81C138 96 127 106 105 106H91M113 105L141 130" stroke="#C6A75E" stroke-width="6"/>
+  <path d="M90 10V24M90 156V170M10 90H24M156 90H170" stroke="#C6A75E" stroke-width="2"/>
+</svg>
