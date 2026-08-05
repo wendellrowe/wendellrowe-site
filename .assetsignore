@@ -4,3 +4,7 @@ package-lock.json
 wrangler.jsonc
 .assetsignore
 .gitignore
+node_modules/
+.git/
+.wrangler/
+.dev.vars*
