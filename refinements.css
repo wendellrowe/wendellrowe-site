@@ -1,0 +1,28 @@
+.hero-intro { max-width: 680px; font-size: clamp(1rem, 1.5vw, 1.25rem); color: #aaa69d; }
+.hero-actions, .contact-actions { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+.text-cta { color: var(--ivory); font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; border-bottom: 1px solid var(--line); padding: 12px 0; transition: color .3s, border-color .3s; }
+.text-cta:hover { color: var(--gold); border-color: var(--gold); }
+.nav-contact { border: 1px solid var(--line); padding: 11px 15px; }
+.nav-contact::after { display: none; }
+.proof-band { width: min(calc(100% - 80px), var(--max)); margin: 0 auto; padding: 24px 0; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.proof-band p { margin: 0; color: #aaa69d; font-size: 9px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
+.proof-band i { width: 3px; height: 3px; flex: 0 0 auto; border-radius: 50%; background: var(--gold); }
+.impact-grid-refined article { display: flex; flex-direction: column; }
+.impact-grid-refined ul { list-style: none; padding: 22px 0 0; margin: auto 0 0; border-top: 1px solid var(--line); display: grid; gap: 9px; }
+.impact-grid-refined li { color: #8f8b83; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+.impact-grid-refined li::before { content: "—"; margin-right: 10px; color: var(--gold); }
+.contact-actions { justify-content: center; }
+.contact-actions .primary-cta { margin-inline: 0; }
+
+@media (max-width: 760px) {
+  .hero-lower { max-width: 340px; }
+  .hero-actions, .contact-actions { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .proof-band { width: min(calc(100% - 36px), var(--max)); justify-content: flex-start; overflow: hidden; }
+  .proof-band p:nth-of-type(n+3), .proof-band i:nth-of-type(n+2) { display: none; }
+  .nav-contact { border: 0; padding: 0; }
+  .contact-actions { align-items: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proof-band { overflow: visible; }
+}
