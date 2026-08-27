@@ -46,6 +46,64 @@
   updateActiveNav();
   window.addEventListener('scroll', updateActiveNav, { passive: true });
 
+  const soundPlayer = document.querySelector('[data-sound-player]');
+  const soundtrack = document.getElementById('site-soundtrack');
+  const soundToggle = document.querySelector('[data-sound-toggle]');
+  const soundStatus = document.querySelector('[data-sound-status]');
+
+  if (soundPlayer && soundtrack && soundToggle && soundStatus) {
+    const source = soundtrack.getAttribute('src') || soundtrack.querySelector('source')?.getAttribute('src');
+    const hasTrack = Boolean(source?.trim());
+
+    const setSoundState = (state, status, label, pressed = false) => {
+      soundPlayer.dataset.state = state;
+      soundStatus.textContent = status;
+      soundToggle.setAttribute('aria-label', label);
+      soundToggle.setAttribute('aria-pressed', String(pressed));
+    };
+
+    if (!hasTrack) {
+      soundToggle.disabled = true;
+      setSoundState('unavailable', 'Coming soon', 'Soundtrack coming soon');
+    } else {
+      soundtrack.volume = .22;
+      soundToggle.disabled = false;
+      const wantsSound = sessionStorage.getItem('wr-soundtrack') === 'on';
+      setSoundState('ready', wantsSound ? 'Resume sound' : 'Play sound', 'Play website soundtrack');
+
+      soundToggle.addEventListener('click', async () => {
+        if (soundtrack.paused) {
+          try {
+            await soundtrack.play();
+            sessionStorage.setItem('wr-soundtrack', 'on');
+            setSoundState('playing', 'Sound on', 'Pause website soundtrack', true);
+          } catch {
+            sessionStorage.setItem('wr-soundtrack', 'off');
+            setSoundState('error', 'Tap to retry', 'Play website soundtrack');
+          }
+          return;
+        }
+
+        soundtrack.pause();
+        sessionStorage.setItem('wr-soundtrack', 'off');
+        setSoundState('paused', 'Sound off', 'Play website soundtrack');
+      });
+
+      soundtrack.addEventListener('error', () => {
+        soundtrack.pause();
+        soundToggle.disabled = true;
+        sessionStorage.setItem('wr-soundtrack', 'off');
+        setSoundState('error', 'Unavailable', 'Soundtrack unavailable');
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden || soundtrack.paused) return;
+        soundtrack.pause();
+        setSoundState('paused', 'Resume sound', 'Play website soundtrack');
+      });
+    }
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
