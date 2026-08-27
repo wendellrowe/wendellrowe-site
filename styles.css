@@ -229,7 +229,7 @@ footer small { grid-column: 1 / -1; color: #55534f; font-size: 8px; letter-spaci
 .sound-player {
   position: fixed;
   z-index: 120;
-  right: max(24px, calc((100vw - var(--max)) / 2 + 24px));
+  right: 24px;
   bottom: 24px;
 }
 .sound-toggle {
