@@ -316,6 +316,19 @@
     </section>
   </main>
 
+  <aside class="sound-player" data-sound-player data-state="unavailable" aria-label="Website soundtrack">
+    <audio id="site-soundtrack" loop preload="none">
+      <!-- A licensed soundtrack source will be added here. -->
+    </audio>
+    <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="false" aria-label="Soundtrack coming soon" disabled>
+      <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span class="sound-copy">
+        <span>Soundscape</span>
+        <strong data-sound-status aria-live="polite">Coming soon</strong>
+      </span>
+    </button>
+  </aside>
+
   <footer>
     <a class="footer-brand" href="#top">
       <img src="assets/wr-monogram.svg" alt="" />
