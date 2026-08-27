@@ -52,6 +52,9 @@
   const soundStatus = document.querySelector('[data-sound-status]');
 
   if (soundPlayer && soundtrack && soundToggle && soundStatus) {
+    soundtrack.src = 'assets/frames-of-history.mp3';
+    soundtrack.preload = 'metadata';
+
     const source = soundtrack.getAttribute('src') || soundtrack.querySelector('source')?.getAttribute('src');
     const hasTrack = Boolean(source?.trim());
 
