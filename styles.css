@@ -110,7 +110,7 @@ h2 em { color: var(--gold); font-style: normal; }
 .capability-card, .impact-grid article { min-height: 280px; padding: 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .capability-card h3, .impact-grid h3, .timeline h3, .principles-list h3 { font-family: var(--serif); text-transform: uppercase; }
 .career { display: grid; grid-template-columns: .85fr 1fr; gap: 80px; align-items: center; }
-.career-visual { min-height: 620px; padding: 55px; position: relative; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: flex-end; }
+.career-visual { min-height: 620px; padding: 48px 40px 40px; position: relative; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; }
 .career-portrait {
   position: absolute; width: min(520px, calc(100% - 48px)); aspect-ratio: 1;
   top: 36px; left: 50%; transform: translateX(-50%);
@@ -126,7 +126,7 @@ h2 em { color: var(--gold); font-style: normal; }
 .principles-list article { display: grid; grid-template-columns: 48px 1fr .8fr; gap: 30px; padding: 36px 0; border-bottom: 1px solid var(--line); }
 .contact { position: relative; min-height: 0; display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; text-align: left; border: 1px solid var(--line); margin-bottom: 80px; padding-inline: 56px; }
 .contact-content { padding: 80px 0; }
-.contact-actions { display: flex; justify-content: flex-start; gap: 18px; flex-wrap: wrap; }
+.contact-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; margin-top: 32px; max-width: 280px; }
 .contact-crest { position: absolute; width: 420px; opacity: .04; pointer-events: none; right: 6%; bottom: 8%; }
 .contact-content, .inquiry { position: relative; z-index: 1; }
 footer {
@@ -448,9 +448,10 @@ footer {
 }
 .story-stanzas p { margin: 0; color: #99968e; font-size: 14px; line-height: 1.85; }
 .portrait-plate {
-  position: absolute;
-  inset: 36px 24px auto;
+  position: relative;
+  width: min(86%, 340px);
   aspect-ratio: 1;
+  margin: 0 auto 28px;
   display: grid;
   place-items: center;
   border-radius: 50%;
