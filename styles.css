@@ -199,12 +199,20 @@ h2 em { color: var(--gold); font-style: normal; }
 .section-label span { color: var(--gold); font-family: var(--serif); font-size: 11px; }
 .manifesto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
 .manifesto-grid p, .executive-summary, .impact-grid p, .capability-card p { color: #99968e; line-height: 1.85; font-size: 14px; }
+.manifesto-copy {
+  display: grid;
+  grid-template-columns: min-content;
+  max-width: 100%;
+}
+.manifesto-copy h2 { white-space: nowrap; }
 .manifesto-body {
   margin: 44px 0 0;
-  max-width: 46em;
+  max-width: none;
   color: #99968e;
   font-size: 15px;
   line-height: 1.9;
+  text-align: justify;
+  text-align-last: left;
 }
 .statement-card { margin-top: 60px; min-height: 280px; padding: 38px; border: 1px solid var(--line); }
 .statement-card p { font-family: var(--serif); font-size: 1.5rem; }
@@ -757,6 +765,8 @@ footer small {
 
 @media (max-width: 760px) {
   .section-shell, footer { width: min(calc(100% - 36px), var(--max)); }
+  .manifesto-copy { grid-template-columns: minmax(0, 1fr); }
+  .manifesto-copy h2 { white-space: normal; }
   .site-header { height: 76px; padding-inline: 18px; }
   .brand span { display: none; }
   .menu-toggle { display: grid; grid-template-columns: 25px auto; gap: 10px; align-items: center; z-index: 60; }
