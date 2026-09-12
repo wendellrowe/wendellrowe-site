@@ -287,6 +287,21 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
   document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
 
+  const lockManifestoWidth = () => {
+    const copy = document.querySelector('.manifesto-copy');
+    const heading = copy?.querySelector('h2');
+    const body = copy?.querySelector('.manifesto-body');
+    if (!copy || !heading || !body) return;
+    if (window.matchMedia('(max-width: 760px)').matches) {
+      body.style.width = '';
+      return;
+    }
+    body.style.width = `${Math.ceil(heading.getBoundingClientRect().width)}px`;
+  };
+  lockManifestoWidth();
+  window.addEventListener('resize', lockManifestoWidth);
+  if (document.fonts?.ready) document.fonts.ready.then(lockManifestoWidth);
+
   const progress = document.querySelector('.scroll-progress');
   const updateProgress = () => {
     if (!progress) return;
