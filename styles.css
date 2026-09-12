@@ -929,3 +929,9 @@ footer { padding-bottom: 110px; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .cursor-dot, .cursor-ring, .spotlight { display: none; }
 }
+
+.inquiry-honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; opacity: 0; }
+.inquiry-status { min-height: 1.5em; margin: 0; color: var(--gold); font-size: 12px; line-height: 1.6; }
+.inquiry-status[data-state="error"] { color: #d9a08c; }
+.inquiry-status[data-state="success"] { color: #b9d2ad; }
+.inquiry-submit:disabled { opacity: .6; cursor: wait; }
