@@ -10,6 +10,24 @@
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  const inquiry = document.querySelector('[data-inquiry]');
+  if (inquiry instanceof HTMLFormElement) {
+    inquiry.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(inquiry);
+      const purpose = String(data.get('purpose') || 'Inquiry');
+      const name = String(data.get('name') || '');
+      const org = String(data.get('organization') || '');
+      const email = String(data.get('email') || '');
+      const message = String(data.get('message') || '');
+      const subject = encodeURIComponent(`Strategic conversation — ${purpose}`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nOrganization: ${org}\nEmail: ${email}\nPurpose: ${purpose}\n\n${message}`
+      );
+      window.location.href = `mailto:hello@wendellrowe.com?subject=${subject}&body=${body}`;
+    });
+  }
+
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 30);
   }, { passive: true });

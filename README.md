@@ -20,7 +20,10 @@ Then visit `http://localhost:8080`.
 4. From the repository root, run `npm run deploy`.
 5. Keep `wendellrowe.com` and `www.wendellrowe.com` attached to the `wendellrowe-site` Worker in Cloudflare.
 
-## Before publishing
+## Filling records
+
+Placeholder copy is marked `records to be entered` and wrapped in `[brackets]`. Replace those lines with cleared figures and facts. Send a portrait when you have it and it will replace the monogram plate. LinkedIn and calendar buttons are in the contact section; point their `href` at your URLs and remove `aria-disabled`.
+
 
 - Confirm the current-title wording in the Executive Path section.
 - Replace `hello@wendellrowe.com` in `index.html` if a different inbox is preferred.
