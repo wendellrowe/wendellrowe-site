@@ -647,21 +647,18 @@ footer small {
 }
 .portrait-plate.has-photo .portrait-fallback { display: none; }
 .portrait-plate.has-crest {
+  width: min(94%, 440px);
+  border-radius: 0;
+  overflow: hidden;
   border: 1px solid rgba(198,167,94,.5);
+  outline: 1px solid rgba(198,167,94,.42);
+  outline-offset: -11px;
   box-shadow: 0 28px 70px rgba(0,0,0,.55);
 }
-.portrait-plate.has-crest::after {
-  content: "";
-  position: absolute;
-  inset: 11px;
-  border: 1px solid rgba(198,167,94,.42);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 2;
-}
+.portrait-plate.has-crest::after { display: none; }
 .portrait-plate.has-crest img {
   position: relative;
-  width: 68%;
+  width: 92%;
   height: auto;
   object-fit: contain;
 }
