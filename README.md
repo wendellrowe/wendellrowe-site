@@ -1,4 +1,4 @@
-# WendellRowe.com — House of Rowe
+# WendellRowe.com — Rowe Meridian Group®
 
 A high-end, responsive personal executive website built as a dependency-free static site.
 
@@ -32,7 +32,7 @@ Then visit `http://localhost:8080`.
 - `index.html` — structure and copy
 - `styles.css` — visual system and responsive layout
 - `script.js` — interactions, animations, canvas background
-- `assets/crest.svg` — custom House of Rowe crest
+- `assets/crest.svg` — custom Rowe Meridian Group® crest
 - `assets/wr-monogram.svg` — WR monogram
 - `assets/favicon.svg` — browser icon
 - `assets/og-card.svg` — social sharing image
