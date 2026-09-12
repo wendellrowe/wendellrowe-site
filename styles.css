@@ -199,6 +199,13 @@ h2 em { color: var(--gold); font-style: normal; }
 .section-label span { color: var(--gold); font-family: var(--serif); font-size: 11px; }
 .manifesto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
 .manifesto-grid p, .executive-summary, .impact-grid p, .capability-card p { color: #99968e; line-height: 1.85; font-size: 14px; }
+.manifesto-origin {
+  margin: 36px 0 0;
+  max-width: 36em;
+  color: #cfc9bc;
+  font-size: 15px;
+  line-height: 1.8;
+}
 .statement-card { margin-top: 60px; min-height: 280px; padding: 38px; border: 1px solid var(--line); }
 .statement-card p { font-family: var(--serif); font-size: 1.5rem; }
 .statement-card cite { color: var(--gold); font-style: normal; font-size: 8px; letter-spacing: .33em; text-transform: uppercase; }
