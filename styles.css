@@ -206,9 +206,35 @@ h2 em { color: var(--gold); font-style: normal; }
   font-size: 15px;
   line-height: 1.9;
 }
-.statement-card { margin-top: 60px; min-height: 280px; padding: 38px; border: 1px solid var(--line); }
-.statement-card p { font-family: var(--serif); font-size: 1.5rem; }
-.statement-card cite { color: var(--gold); font-style: normal; font-size: 8px; letter-spacing: .33em; text-transform: uppercase; }
+.statement-card {
+  margin-top: 60px;
+  min-height: 320px;
+  padding: 52px 56px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 28px;
+  border: 1px solid rgba(198,167,94,.5);
+  outline: 1px solid rgba(198,167,94,.42);
+  outline-offset: -11px;
+  box-shadow: 0 28px 70px rgba(0,0,0,.55);
+  background: #080808;
+}
+.statement-card p {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 5.4vw, 5.2rem);
+  line-height: 1.08;
+  font-weight: 500;
+}
+.statement-card cite {
+  color: var(--gold);
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: .36em;
+  text-transform: uppercase;
+}
+.statement-card span { display: none; }
 .capability-grid, .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
 .capability-grid { grid-template-columns: repeat(4, 1fr); }
 .capability-card, .impact-grid article { min-height: 280px; padding: 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background 250ms var(--ease); }
@@ -782,6 +808,7 @@ footer small {
   .career-visual { min-height: 480px; margin-bottom: 60px; }
   .proof-bar article, .firm-grid article { border-right: 0; }
   .contact { padding-inline: 22px; }
+  .statement-card { padding: 36px 22px 32px; min-height: 240px; }
   .inquiry { padding-top: 0; padding-bottom: 48px; }
   .principles-list article { grid-template-columns: 36px 1fr; }
   .scroll-cue { display: none; }
