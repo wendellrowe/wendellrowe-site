@@ -12,19 +12,25 @@
 
   const inquiry = document.querySelector('[data-inquiry]');
   if (inquiry instanceof HTMLFormElement) {
-    inquiry.addEventListener('submit', (event) => {
+    const submit = inquiry.querySelector('.inquiry-submit');
+    const status = inquiry.querySelector('[data-inquiry-status]');
+    const fallbackMail = (data) => {
+      const purpose = String(data.get('purpose') || 'Inquiry');
+      const body = encodeURIComponent(`Name: ${data.get('name') || ''}\\nOrganization: ${data.get('organization') || ''}\\nEmail: ${data.get('email') || ''}\\nPurpose: ${purpose}\\n\\n${data.get('message') || ''}`);
+      window.location.href = `mailto:hello@wendellrowe.com?subject=${encodeURIComponent(`Strategic conversation — ${purpose}`)}&body=${body}`;
+    };
+    inquiry.addEventListener('submit', async (event) => {
       event.preventDefault();
       const data = new FormData(inquiry);
-      const purpose = String(data.get('purpose') || 'Inquiry');
-      const name = String(data.get('name') || '');
-      const org = String(data.get('organization') || '');
-      const email = String(data.get('email') || '');
-      const message = String(data.get('message') || '');
-      const subject = encodeURIComponent(`Strategic conversation — ${purpose}`);
-      const body = encodeURIComponent(
-        `Name: ${name}\nOrganization: ${org}\nEmail: ${email}\nPurpose: ${purpose}\n\n${message}`
-      );
-      window.location.href = `mailto:hello@wendellrowe.com?subject=${subject}&body=${body}`;
+      if (submit) { submit.disabled = true; submit.querySelector('span').textContent = 'Sending'; }
+      if (status) { status.textContent = 'Sending your inquiry…'; status.dataset.state = 'sending'; }
+      try {
+        const response = await fetch('/api/inquiry', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(Object.fromEntries(data)) });
+        if (response.ok) { inquiry.reset(); if (status) { status.textContent = 'Your inquiry has been sent. Thank you.'; status.dataset.state = 'success'; } }
+        else if (response.status === 503) fallbackMail(data);
+        else throw new Error('delivery');
+      } catch { if (status) { status.textContent = 'We could not send that. Please email hello@wendellrowe.com directly.'; status.dataset.state = 'error'; } }
+      finally { if (submit) { submit.disabled = false; submit.querySelector('span').textContent = 'Send inquiry'; } }
     });
   }
 
