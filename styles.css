@@ -59,8 +59,8 @@ img { max-width: 100%; display: block; }
 .site-nav { display: flex; gap: 28px; }
 .site-nav a { color: #b4b0a8; font-size: 11px; text-transform: uppercase; letter-spacing: .18em; }
 .hero {
-  min-height: 100svh; display: grid; grid-template-columns: 1fr minmax(280px, .48fr);
-  align-items: center; padding-top: 120px; padding-bottom: 76px; position: relative;
+  min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center; padding-top: 120px; padding-bottom: 76px; position: relative; column-gap: 48px;
 }
 .eyebrow, .kicker { margin: 0 0 24px; color: var(--gold); font-size: 10px; letter-spacing: .34em; text-transform: uppercase; }
 .eyebrow span { color: #b9bdc5; margin-right: 20px; }
@@ -81,39 +81,24 @@ img { max-width: 100%; display: block; }
 .primary-cta svg { width: 23px; fill: none; stroke: currentColor; stroke-width: 1.3; }
 .hero-sigil { justify-self: end; width: min(32vw, 450px); aspect-ratio: 1; position: relative; display: grid; place-items: center; }
 .hero-sigil.hero-portrait {
-  width: min(46vw, 620px);
+  width: min(56vw, 760px);
   aspect-ratio: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
   overflow: visible;
+  border-radius: 0;
 }
-.hero-portrait-ring {
-  width: 100%;
-  aspect-ratio: 1;
-  position: relative;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 1px solid rgba(198,167,94,.5);
-  background: #090909;
-}
-.hero-sigil.hero-portrait .sigil-halo {
-  display: block;
-  inset: 4%;
-  z-index: 2;
-  pointer-events: none;
-}
+.hero-sigil.hero-portrait .sigil-halo { display: none; }
 .hero-sigil.hero-portrait img {
-  width: 92%;
+  width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: contain;
   object-position: center center;
   border-radius: 0;
-  border: 0;
+  border: 1px solid rgba(198,167,94,.45);
   position: relative;
   z-index: 1;
 }
@@ -694,7 +679,7 @@ footer small {
   .hero { display: block; padding-top: 140px; }
   .hero h1 { font-size: clamp(3.2rem, 18vw, 5.2rem); line-height: .86; }
   .hero-sigil { width: min(58vw, 280px); margin: 36px 0 0 auto; }
-  .hero-sigil.hero-portrait { width: min(84vw, 420px); }
+  .hero-sigil.hero-portrait { width: min(92vw, 480px); }
   .hero-lower { display: block; }
   .primary-cta { margin-top: 26px; }
   .manifesto-grid, .capability-grid, .impact-grid, .proof-bar, .story-frame, .career, .firm-grid, .principles, .contact, .inquiry-purpose { display: block; }
