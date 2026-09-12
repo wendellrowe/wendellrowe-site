@@ -44,3 +44,16 @@ Draft operating copy is on the page so the structure reads finished. Swap any fi
 ## Deployment status
 
 Cloudflare automatically deploys the production Worker from the `main` branch.
+
+## Inquiry delivery
+
+The contact form submits to the Worker endpoint at `/api/inquiry`. Delivery uses [Resend](https://resend.com/):
+
+1. Create a Resend account and verify `wendellrowe.com` (or a dedicated sending subdomain).
+2. Create an API key with permission to send email.
+3. Add these Worker secrets in Cloudflare for the production environment:
+   - `RESEND_API_KEY` — the Resend API key.
+   - `INQUIRY_FROM` — a verified sender such as `Wendell Rowe <inquiries@wendellrowe.com>`.
+4. Redeploy or update the Worker secret bindings.
+
+Messages are delivered to `hello@wendellrowe.com` with the visitor address in `Reply-To`. Until these two secrets are present, the form falls back to preparing an email draft so inquiries are not lost.
