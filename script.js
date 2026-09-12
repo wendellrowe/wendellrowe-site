@@ -66,7 +66,8 @@
       soundRing.style.strokeDashoffset = String(CIRC);
     }
 
-    const storedVolume = Number(sessionStorage.getItem('wr-volume'));
+    const rawVolume = sessionStorage.getItem('wr-volume');
+    const storedVolume = rawVolume == null ? Number.NaN : Number(rawVolume);
     soundtrack.volume = Number.isFinite(storedVolume) ? storedVolume : .22;
     if (soundVolume instanceof HTMLInputElement) {
       soundVolume.value = String(Math.round(soundtrack.volume * 100));
