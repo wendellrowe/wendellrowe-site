@@ -613,6 +613,19 @@ footer small {
   border-radius: 50%;
 }
 .portrait-plate.has-photo .portrait-fallback { display: none; }
+.portrait-plate.has-crest {
+  border: 1px solid rgba(198,167,94,.5);
+  box-shadow: 0 28px 70px rgba(0,0,0,.55);
+}
+.portrait-plate.has-crest::after {
+  content: "";
+  position: absolute;
+  inset: 11px;
+  border: 1px solid rgba(198,167,94,.42);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+}
 .portrait-plate.has-crest img {
   position: relative;
   width: 68%;
