@@ -22,7 +22,7 @@ Then visit `http://localhost:8080`.
 
 ## Filling records
 
-Placeholder copy is marked `records to be entered` and wrapped in `[brackets]`. Replace those lines with cleared figures and facts. Send a portrait when you have it and it will replace the monogram plate. LinkedIn and calendar buttons are in the contact section; point their `href` at your URLs and remove `aria-disabled`.
+Draft operating copy is on the page so the structure reads finished. Swap any figure, year, or story line the moment your records differ. Portrait remains a monogram plate until a photograph is supplied.
 
 
 - Confirm the current-title wording in the Executive Path section.
