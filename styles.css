@@ -107,7 +107,7 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
 }
 .hero-sigil.hero-portrait img {
-  width: 72%;
+  width: 92%;
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: contain;
