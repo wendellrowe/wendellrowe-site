@@ -1,0 +1,21 @@
+.kaws-peek {
+  position: fixed;
+  left: max(8px, env(safe-area-inset-left));
+  bottom: 0;
+  z-index: 110;
+  width: 150px;
+  height: 168px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.kaws-peek img {
+  width: 150px;
+  height: auto;
+  transform: translateY(8%);
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,.65)) drop-shadow(0 0 18px rgba(198,167,94,.22));
+}
+body.menu-open .kaws-peek { visibility: hidden; }
+@media (max-width: 760px) {
+  .kaws-peek { width: 108px; height: 122px; }
+  .kaws-peek img { width: 108px; }
+}
