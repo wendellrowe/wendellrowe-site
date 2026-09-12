@@ -50,62 +50,213 @@
   const soundtrack = document.getElementById('site-soundtrack');
   const soundToggle = document.querySelector('[data-sound-toggle]');
   const soundStatus = document.querySelector('[data-sound-status]');
+  const soundExpand = document.querySelector('[data-sound-expand]');
+  const soundSeek = document.querySelector('[data-sound-seek]');
+  const soundVolume = document.querySelector('[data-sound-volume]');
+  const soundMute = document.querySelector('[data-sound-mute]');
+  const soundCurrent = document.querySelector('[data-sound-current]');
+  const soundDuration = document.querySelector('[data-sound-duration]');
+  const soundRing = document.querySelector('[data-sound-ring]');
+  const soundWave = document.querySelector('[data-sound-wave]');
 
-  if (soundPlayer && soundtrack && soundToggle && soundStatus) {
-    soundtrack.src = 'assets/frames-of-history.mp3';
-    soundtrack.preload = 'metadata';
+  if (soundPlayer && soundtrack instanceof HTMLAudioElement && soundToggle && soundStatus) {
+    const CIRC = 2 * Math.PI * 46;
+    if (soundRing instanceof SVGCircleElement) {
+      soundRing.style.strokeDasharray = String(CIRC);
+      soundRing.style.strokeDashoffset = String(CIRC);
+    }
 
-    const source = soundtrack.getAttribute('src') || soundtrack.querySelector('source')?.getAttribute('src');
-    const hasTrack = Boolean(source?.trim());
+    const storedVolume = Number(sessionStorage.getItem('wr-volume'));
+    soundtrack.volume = Number.isFinite(storedVolume) ? storedVolume : .22;
+    if (soundVolume instanceof HTMLInputElement) {
+      soundVolume.value = String(Math.round(soundtrack.volume * 100));
+    }
 
-    const setSoundState = (state, status, label, pressed = false) => {
+    const formatTime = (value) => {
+      if (!Number.isFinite(value)) return '0:00';
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, '0');
+      return `${minutes}:${seconds}`;
+    };
+
+    const setSoundState = (state, label, pressed = false) => {
       soundPlayer.dataset.state = state;
-      soundStatus.textContent = status;
+      const copy = {
+        ready: 'Play soundscape',
+        playing: 'Now playing',
+        paused: 'Paused',
+        error: 'Tap to retry'
+      }[state] || 'Soundscape';
+      soundStatus.textContent = copy;
       soundToggle.setAttribute('aria-label', label);
       soundToggle.setAttribute('aria-pressed', String(pressed));
     };
 
-    if (!hasTrack) {
-      soundToggle.disabled = true;
-      setSoundState('unavailable', 'Coming soon', 'Soundtrack coming soon');
-    } else {
-      soundtrack.volume = .22;
-      soundToggle.disabled = false;
-      const wantsSound = sessionStorage.getItem('wr-soundtrack') === 'on';
-      setSoundState('ready', wantsSound ? 'Resume sound' : 'Play sound', 'Play website soundtrack');
+    let audioCtx = null;
+    let analyser = null;
+    let freqData = null;
 
-      soundToggle.addEventListener('click', async () => {
-        if (soundtrack.paused) {
-          try {
-            await soundtrack.play();
-            sessionStorage.setItem('wr-soundtrack', 'on');
-            setSoundState('playing', 'Sound on', 'Pause website soundtrack', true);
-          } catch {
-            sessionStorage.setItem('wr-soundtrack', 'off');
-            setSoundState('error', 'Tap to retry', 'Play website soundtrack');
-          }
-          return;
+    const setupGraph = async () => {
+      if (audioCtx || !(soundWave instanceof HTMLCanvasElement)) return;
+      const Context = window.AudioContext || window.webkitAudioContext;
+      if (!Context) return;
+      audioCtx = new Context();
+      const sourceNode = audioCtx.createMediaElementSource(soundtrack);
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 128;
+      analyser.smoothingTimeConstant = .78;
+      sourceNode.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      freqData = new Uint8Array(analyser.frequencyBinCount);
+    };
+
+    const paintWave = (timeStamp) => {
+      if (!(soundWave instanceof HTMLCanvasElement)) return;
+      const ctx = soundWave.getContext('2d');
+      if (!ctx) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const width = soundWave.clientWidth || 268;
+      const height = soundWave.clientHeight || 36;
+      if (soundWave.width !== Math.floor(width * dpr) || soundWave.height !== Math.floor(height * dpr)) {
+        soundWave.width = Math.floor(width * dpr);
+        soundWave.height = Math.floor(height * dpr);
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+      const bars = 40;
+      const gap = 2;
+      const barWidth = Math.max(1.6, (width - gap * (bars - 1)) / bars);
+      if (analyser && freqData && !soundtrack.paused) analyser.getByteFrequencyData(freqData);
+      for (let i = 0; i < bars; i += 1) {
+        const sample = freqData ? freqData[Math.floor(i * (freqData.length / bars))] / 255 : 0;
+        const idle = .14 + .1 * Math.sin(i * .42 + timeStamp / 640);
+        const amp = soundtrack.paused ? idle : Math.max(.08, sample);
+        const barHeight = Math.max(3, amp * height);
+        ctx.fillStyle = `rgba(198, 167, 94, ${.25 + amp * .75})`;
+        ctx.fillRect(i * (barWidth + gap), (height - barHeight) / 2, barWidth, barHeight);
+      }
+    };
+
+    const setRangeFill = (input, value, max) => {
+      if (!(input instanceof HTMLInputElement)) return;
+      input.style.setProperty('--fill', `${(value / max) * 100}%`);
+    };
+
+    const syncTransport = (timeStamp) => {
+      const duration = soundtrack.duration || 0;
+      const current = soundtrack.currentTime || 0;
+      if (soundCurrent) soundCurrent.textContent = formatTime(current);
+      if (soundDuration) soundDuration.textContent = formatTime(duration);
+      if (soundSeek instanceof HTMLInputElement && document.activeElement !== soundSeek) {
+        soundSeek.value = duration ? String(Math.round((current / duration) * 1000)) : '0';
+        setRangeFill(soundSeek, Number(soundSeek.value), 1000);
+      }
+      if (soundVolume instanceof HTMLInputElement) setRangeFill(soundVolume, Number(soundVolume.value), 100);
+      if (soundRing instanceof SVGCircleElement) {
+        soundRing.style.strokeDashoffset = String(CIRC * (1 - (duration ? current / duration : 0)));
+      }
+      paintWave(timeStamp);
+      requestAnimationFrame(syncTransport);
+    };
+    requestAnimationFrame(syncTransport);
+
+    const playSoundtrack = async () => {
+      try {
+        await setupGraph();
+        await audioCtx?.resume();
+        await soundtrack.play();
+        sessionStorage.setItem('wr-soundtrack', 'on');
+        setSoundState('playing', 'Pause website soundtrack', true);
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: 'Frames of History',
+            artist: 'House of Rowe',
+            album: 'Wendell Rowe'
+          });
+          navigator.mediaSession.playbackState = 'playing';
         }
-
-        soundtrack.pause();
+      } catch {
         sessionStorage.setItem('wr-soundtrack', 'off');
-        setSoundState('paused', 'Sound off', 'Play website soundtrack');
-      });
+        setSoundState('error', 'Play website soundtrack');
+      }
+    };
 
-      soundtrack.addEventListener('error', () => {
-        soundtrack.pause();
-        soundToggle.disabled = true;
-        sessionStorage.setItem('wr-soundtrack', 'off');
-        setSoundState('error', 'Unavailable', 'Soundtrack unavailable');
-      });
+    const pauseSoundtrack = (resumeLabel = false) => {
+      soundtrack.pause();
+      sessionStorage.setItem('wr-soundtrack', 'off');
+      setSoundState('paused', 'Play website soundtrack');
+      if (resumeLabel) soundStatus.textContent = 'Resume sound';
+      if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
+    };
 
-      document.addEventListener('visibilitychange', () => {
-        if (!document.hidden || soundtrack.paused) return;
-        soundtrack.pause();
-        setSoundState('paused', 'Resume sound', 'Play website soundtrack');
-      });
+    soundToggle.addEventListener('click', () => {
+      if (soundtrack.paused) playSoundtrack();
+      else pauseSoundtrack();
+    });
+
+    soundExpand?.addEventListener('click', (event) => {
+      event.preventDefault();
+      const open = soundPlayer.dataset.open === 'true';
+      soundPlayer.dataset.open = String(!open);
+      soundExpand.setAttribute('aria-expanded', String(!open));
+      soundExpand.setAttribute('aria-label', open ? 'Open soundtrack details' : 'Close soundtrack details');
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (soundPlayer.dataset.open !== 'true') return;
+      if (!(event.target instanceof Node) || soundPlayer.contains(event.target)) return;
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      soundPlayer.dataset.open = 'false';
+      soundExpand?.setAttribute('aria-expanded', 'false');
+    });
+
+
+    soundSeek?.addEventListener('input', () => {
+      if (!(soundSeek instanceof HTMLInputElement) || !soundtrack.duration) return;
+      soundtrack.currentTime = (Number(soundSeek.value) / 1000) * soundtrack.duration;
+      setRangeFill(soundSeek, Number(soundSeek.value), 1000);
+    });
+
+    soundVolume?.addEventListener('input', () => {
+      if (!(soundVolume instanceof HTMLInputElement)) return;
+      soundtrack.volume = Number(soundVolume.value) / 100;
+      soundtrack.muted = soundtrack.volume === 0;
+      sessionStorage.setItem('wr-volume', String(soundtrack.volume));
+      soundMute?.setAttribute('aria-pressed', String(soundtrack.muted));
+      setRangeFill(soundVolume, Number(soundVolume.value), 100);
+    });
+
+    soundMute?.addEventListener('click', () => {
+      soundtrack.muted = !soundtrack.muted;
+      soundMute.setAttribute('aria-pressed', String(soundtrack.muted));
+      soundMute.setAttribute('aria-label', soundtrack.muted ? 'Unmute soundtrack' : 'Mute soundtrack');
+    });
+
+    soundtrack.addEventListener('loadedmetadata', () => {
+      if (soundDuration) soundDuration.textContent = formatTime(soundtrack.duration);
+    });
+
+    soundtrack.addEventListener('error', () => {
+      soundtrack.pause();
+      setSoundState('error', 'Soundtrack unavailable');
+      soundStatus.textContent = 'Unavailable';
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden || soundtrack.paused) return;
+      pauseSoundtrack(true);
+    });
+
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.setActionHandler('play', () => { playSoundtrack(); });
+      navigator.mediaSession.setActionHandler('pause', () => { pauseSoundtrack(); });
     }
+
+    const wantsSound = sessionStorage.getItem('wr-soundtrack') === 'on';
+    setSoundState('ready', wantsSound ? 'Resume website soundtrack' : 'Play website soundtrack');
+    if (wantsSound) soundStatus.textContent = 'Resume sound';
   }
+
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
