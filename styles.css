@@ -61,18 +61,24 @@ img { max-width: 100%; display: block; }
 .hero {
   min-height: 100svh;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 400px);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   align-items: start;
   padding-top: 132px;
-  padding-bottom: 88px;
+  padding-bottom: 64px;
   position: relative;
-  column-gap: 64px;
+  column-gap: 40px;
+}
+.hero-copy {
+  min-width: 0;
+  position: relative;
+  z-index: 2;
+  container-type: inline-size;
 }
 .eyebrow, .kicker { margin: 0 0 24px; color: var(--gold); font-size: 10px; letter-spacing: .34em; text-transform: uppercase; }
 .eyebrow span { color: #b9bdc5; margin-right: 20px; }
 .hero h1 {
   margin: 0; font-family: var(--serif);
-  font-size: clamp(4.5rem, 11.5vw, 11.6rem); line-height: .76;
+  font-size: clamp(3.4rem, 22cqi, 10.2rem); line-height: .76;
   letter-spacing: -.065em; text-transform: uppercase; font-weight: 600;
 }
 .hero h1 span { display: block; }
@@ -88,8 +94,8 @@ img { max-width: 100%; display: block; }
 .hero-sigil { justify-self: end; width: min(32vw, 450px); aspect-ratio: 1; position: relative; display: grid; place-items: center; }
 .hero-sigil.hero-portrait {
   width: 100%;
-  max-width: 400px;
-  margin-top: 52px;
+  max-width: 760px;
+  margin-top: 0;
   aspect-ratio: auto;
   display: flex;
   flex-direction: column;
@@ -97,7 +103,7 @@ img { max-width: 100%; display: block; }
   gap: 14px;
   overflow: visible;
   border-radius: 0;
-  justify-self: end;
+  justify-self: stretch;
 }
 .hero-sigil.hero-portrait .sigil-halo { display: none; }
 .hero-portrait-frame {
@@ -716,7 +722,7 @@ footer small {
   .hero { display: block; padding-top: 140px; }
   .hero h1 { font-size: clamp(3.2rem, 18vw, 5.2rem); line-height: .86; }
   .hero-sigil { width: min(58vw, 280px); margin: 36px 0 0 auto; }
-  .hero-sigil.hero-portrait { width: min(78vw, 360px); max-width: none; margin-top: 36px; }
+  .hero-sigil.hero-portrait { width: min(88vw, 420px); max-width: none; margin-top: 28px; }
   .hero-lower { display: block; }
   .primary-cta { margin-top: 26px; }
   .manifesto-grid, .capability-grid, .impact-grid, .proof-bar, .story-frame, .career, .firm-grid, .principles, .contact, .inquiry-purpose { display: block; }
