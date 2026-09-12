@@ -188,7 +188,7 @@ img { max-width: 100%; display: block; }
 .hero-index p { margin: 0; color: #99968e; font-size: 8px; letter-spacing: .22em; text-transform: uppercase; }
 .scroll-cue { position: absolute; right: 0; bottom: 25px; color: #77736b; font-size: 8px; letter-spacing: .28em; text-transform: uppercase; }
 .marquee { overflow: hidden; padding: 25px 0; border-top: 1px solid rgba(255,255,255,.055); border-bottom: 1px solid rgba(255,255,255,.055); }
-.marquee-track { width: max-content; display: flex; align-items: center; gap: 33px; animation: none; }
+.marquee-track { width: max-content; display: flex; align-items: center; gap: 33px; animation: marquee 28s linear infinite; }
 .marquee span { font-family: var(--serif); text-transform: uppercase; letter-spacing: .12em; color: rgba(238,233,223,.5); }
 .marquee i { color: var(--gold); font-style: normal; }
 @keyframes marquee { to { transform: translateX(-50%); } }
