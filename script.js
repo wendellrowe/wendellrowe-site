@@ -230,7 +230,7 @@
         if ('mediaSession' in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({
             title: 'Frames of History',
-            artist: 'Rowe Meridian Group™',
+            artist: 'Rowe Meridian Group℠',
             album: 'Wendell Rowe'
           });
           navigator.mediaSession.playbackState = 'playing';
