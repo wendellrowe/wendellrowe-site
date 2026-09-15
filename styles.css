@@ -280,6 +280,9 @@ h2 em { color: var(--gold); font-style: normal; }
 .principles-list article { display: grid; grid-template-columns: 48px 1fr .8fr; gap: 30px; padding: 36px 0; border-bottom: 1px solid var(--line); }
 .contact { position: relative; min-height: 0; display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; text-align: left; border: 1px solid var(--line); margin-bottom: 80px; padding-inline: 56px; }
 .contact-content { padding: 80px 0; }
+.contact-email { margin-top: 32px; }
+.contact-email p { margin: 0 0 8px; color: #aaa69d; font-size: 14px; }
+.contact-email a { display: inline-block; padding-block: 10px; color: var(--gold); font: 500 clamp(1rem, 2vw, 1.35rem)/1.5 var(--sans); text-decoration: underline; text-underline-offset: 6px; overflow-wrap: anywhere; }
 .contact-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; margin-top: 32px; max-width: 280px; }
 .contact-crest { position: absolute; width: 420px; opacity: .04; pointer-events: none; right: 6%; bottom: 8%; }
 .contact-content, .inquiry { position: relative; z-index: 1; }

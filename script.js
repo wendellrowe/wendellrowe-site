@@ -16,7 +16,12 @@
     const status = inquiry.querySelector('[data-inquiry-status]');
     const fallbackMail = (data) => {
       const purpose = String(data.get('purpose') || 'Inquiry');
-      const body = encodeURIComponent(`Name: ${data.get('name') || ''}\\nOrganization: ${data.get('organization') || ''}\\nEmail: ${data.get('email') || ''}\\nPurpose: ${purpose}\\n\\n${data.get('message') || ''}`);
+      const body = encodeURIComponent([
+        `Name: ${data.get('name') || ''}`,
+        `Organization: ${data.get('organization') || ''}`,
+        `Email: ${data.get('email') || ''}`,
+        `Purpose: ${purpose}`, '', String(data.get('message') || '')
+      ].join('\n'));
       window.location.href = `mailto:hello@wendellrowe.com?subject=${encodeURIComponent(`Strategic conversation — ${purpose}`)}&body=${body}`;
     };
     inquiry.addEventListener('submit', async (event) => {
@@ -27,7 +32,10 @@
       try {
         const response = await fetch('/api/inquiry', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(Object.fromEntries(data)) });
         if (response.ok) { inquiry.reset(); if (status) { status.textContent = 'Your inquiry has been sent. Thank you.'; status.dataset.state = 'success'; } }
-        else if (response.status === 503) fallbackMail(data);
+        else if (response.status === 503) {
+          if (status) { status.textContent = 'Your message has not been sent. A draft will open in your email app; please send it there, or email hello@wendellrowe.com directly.'; status.dataset.state = 'error'; }
+          fallbackMail(data);
+        }
         else throw new Error('delivery');
       } catch { if (status) { status.textContent = 'We could not send that. Please email hello@wendellrowe.com directly.'; status.dataset.state = 'error'; } }
       finally { if (submit) { submit.disabled = false; submit.querySelector('span').textContent = 'Send inquiry'; } }
