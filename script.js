@@ -14,6 +14,7 @@
   if (inquiry instanceof HTMLFormElement) {
     const submit = inquiry.querySelector('.inquiry-submit');
     const status = inquiry.querySelector('[data-inquiry-status]');
+    const fallbackLink = inquiry.querySelector('[data-inquiry-fallback]');
     const fallbackMail = (data) => {
       const purpose = String(data.get('purpose') || 'Inquiry');
       const body = encodeURIComponent([
@@ -22,22 +23,29 @@
         `Email: ${data.get('email') || ''}`,
         `Purpose: ${purpose}`, '', String(data.get('message') || '')
       ].join('\n'));
-      window.location.href = `mailto:hello@wendellrowe.com?subject=${encodeURIComponent(`Strategic conversation — ${purpose}`)}&body=${body}`;
+      if (fallbackLink) {
+        fallbackLink.href = `mailto:hello@wendellrowe.com?subject=${encodeURIComponent(`Strategic conversation — ${purpose}`)}&body=${body}`;
+        fallbackLink.hidden = false;
+      }
     };
     inquiry.addEventListener('submit', async (event) => {
       event.preventDefault();
       const data = new FormData(inquiry);
+      if (fallbackLink) fallbackLink.hidden = true;
       if (submit) { submit.disabled = true; submit.querySelector('span').textContent = 'Sending'; }
       if (status) { status.textContent = 'Sending your inquiry…'; status.dataset.state = 'sending'; }
       try {
         const response = await fetch('/api/inquiry', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(Object.fromEntries(data)) });
         if (response.ok) { inquiry.reset(); if (status) { status.textContent = 'Your inquiry has been sent. Thank you.'; status.dataset.state = 'success'; } }
         else if (response.status === 503) {
-          if (status) { status.textContent = 'Your message has not been sent. A draft will open in your email app; please send it there, or email hello@wendellrowe.com directly.'; status.dataset.state = 'error'; }
+          if (status) { status.textContent = 'Your message has not been sent. Use Open email draft below to send it from your email app, or email hello@wendellrowe.com directly.'; status.dataset.state = 'error'; }
           fallbackMail(data);
         }
         else throw new Error('delivery');
-      } catch { if (status) { status.textContent = 'We could not send that. Please email hello@wendellrowe.com directly.'; status.dataset.state = 'error'; } }
+      } catch {
+        if (status) { status.textContent = 'Your message has not been sent. Use Open email draft below, or email hello@wendellrowe.com directly.'; status.dataset.state = 'error'; }
+        fallbackMail(data);
+      }
       finally { if (submit) { submit.disabled = false; submit.querySelector('span').textContent = 'Send inquiry'; } }
     });
   }
@@ -84,7 +92,7 @@
       }
     }
   });
-  window.matchMedia('(max-width: 760px)').addEventListener('change', closeMenu);
+  window.matchMedia('(max-width: 1100px)').addEventListener('change', closeMenu);
 
   const navLinks = [...(nav?.querySelectorAll('a[href^="#"]') || [])];
   const navSections = navLinks
@@ -387,7 +395,7 @@
       el.addEventListener('mouseleave', () => cursorRing.classList.remove('is-active'));
     });
 
-    const ctaMotionReference = document.querySelector('.hero .primary-cta');
+    const ctaMotionReference = document.querySelector('.hero .primary-cta') || document.querySelector('.primary-cta');
     document.querySelectorAll('.magnetic').forEach(el => {
       const isCta = el.classList.contains('primary-cta');
       let shiftX = 0, shiftY = 0;

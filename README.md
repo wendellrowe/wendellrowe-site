@@ -56,4 +56,17 @@ The contact form submits to the Worker endpoint at `/api/inquiry`. Delivery uses
    - `INQUIRY_FROM` — a verified sender such as `Wendell Rowe <inquiries@wendellrowe.com>`.
 4. Redeploy or update the Worker secret bindings.
 
-Messages are delivered to `hello@wendellrowe.com` with the visitor address in `Reply-To`. Until these two secrets are present, the form falls back to preparing an email draft so inquiries are not lost.
+Messages are delivered to `hello@wendellrowe.com` with the visitor address in `Reply-To`. Until these two secrets are present, the form keeps the visitor’s message and offers an explicit Open email draft link. Failed network or provider requests also preserve the draft; no successful send is reported on those paths.
+
+
+## Site structure
+
+The homepage presents the introduction, selected career results, a concise profile, executive path, firm engagements, and contact. The complete biography is available at `/bio`; its PDF link uses the asset’s exact filename. Section numbers follow the page order. The personal birth-year reference is labelled Born, while the firm crest uses the firm name.
+
+## Remaining delivery activation
+
+Production currently needs the existing `RESEND_API_KEY` and `INQUIRY_FROM` Worker secrets. Set them on `wendellrowe-site` in Cloudflare after verifying the sending domain in Resend. Keep the API key out of this repository and chat.
+
+After activation, send a clearly labelled test through the production form and confirm receipt at `hello@wendellrowe.com`, including the visitor address in Reply-To. A successful HTTP response alone is not an inbox-delivery test.
+
+The career metrics retain their previously published context; employer and role attribution should be added only when Wendell confirms those details.
