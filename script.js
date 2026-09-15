@@ -387,14 +387,31 @@
       el.addEventListener('mouseleave', () => cursorRing.classList.remove('is-active'));
     });
 
+    const ctaMotionReference = document.querySelector('.hero .primary-cta');
     document.querySelectorAll('.magnetic').forEach(el => {
+      const isCta = el.classList.contains('primary-cta');
+      let shiftX = 0, shiftY = 0;
       el.addEventListener('mousemove', (event) => {
         const rect = el.getBoundingClientRect();
-        const x = event.clientX - rect.left - rect.width / 2;
-        const y = event.clientY - rect.top - rect.height / 2;
-        el.style.transform = `translate(${x * .12}px, ${y * .12}px)`;
+        if (isCta && ctaMotionReference) {
+          // Measure from the resting box so the button cannot chase its own movement.
+          const x = (event.clientX - (rect.left - shiftX)) / rect.width - .5;
+          const y = (event.clientY - (rect.top - shiftY)) / rect.height - .5;
+          // All CTAs share the hero button's travel, regardless of their label or size.
+          shiftX = Math.max(-.5, Math.min(.5, x)) * ctaMotionReference.offsetWidth * .12;
+          shiftY = Math.max(-.5, Math.min(.5, y)) * ctaMotionReference.offsetHeight * .12;
+          el.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
+        } else {
+          const x = event.clientX - rect.left - rect.width / 2;
+          const y = event.clientY - rect.top - rect.height / 2;
+          el.style.transform = `translate(${x * .12}px, ${y * .12}px)`;
+        }
       });
-      el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+      el.addEventListener('mouseleave', () => {
+        shiftX = 0;
+        shiftY = 0;
+        el.style.transform = '';
+      });
     });
 
     document.querySelectorAll('[data-tilt]').forEach(card => {
