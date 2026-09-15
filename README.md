@@ -1,4 +1,4 @@
-# WendellRowe.com — Rowe Meridian Group®
+# WendellRowe.com — Rowe Meridian Group™
 
 A high-end, responsive personal executive website built as a dependency-free static site.
 
@@ -35,7 +35,7 @@ Draft operating copy is on the page so the structure reads finished. Swap any fi
 - `index.html` — structure and copy
 - `styles.css` — visual system and responsive layout
 - `script.js` — interactions, animations, canvas background
-- `assets/crest.svg` — custom Rowe Meridian Group® crest
+- `assets/crest.svg` — custom Rowe Meridian Group™ crest
 - `assets/wr-monogram.svg` — WR monogram
 - `assets/favicon.svg` — browser icon
 - `assets/og-card.svg` — social sharing image
