@@ -44,7 +44,6 @@ async function handleInquiry(request, env) {
   if (request.method !== "POST") return json({ error: "Method not allowed." }, 405);
   const origin = request.headers.get("Origin");
   if (origin && origin !== "https://wendellrowe.com") return json({ error: "Origin not allowed." }, 403);
-  if (!env.RESEND_API_KEY || !env.INQUIRY_FROM) return json({ error: "Inquiry delivery is not configured." }, 503);
 
   let data;
   try {
@@ -74,25 +73,17 @@ async function handleInquiry(request, env) {
     message,
   ].join("\n");
 
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      authorization: "Bearer " + env.RESEND_API_KEY,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      from: env.INQUIRY_FROM,
-      to: ["hello@wendellrowe.com"],
-      reply_to: email,
+  try {
+    await env.EMAIL.send({
+      from: "Wendell Rowe <inquiries@wendellrowe.com>",
+      to: "hello@wendellrowe.com",
       subject,
       text,
-    }),
-  });
-
-  if (!response.ok) {
+    });
+    return json({ ok: true });
+  } catch {
     return json({ error: "We could not send your inquiry. Please try again or email hello@wendellrowe.com." }, 502);
   }
-  return json({ ok: true });
 }
 
 function clean(value, max) {

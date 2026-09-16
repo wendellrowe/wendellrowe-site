@@ -47,16 +47,17 @@ Cloudflare automatically deploys the production Worker from the `main` branch.
 
 ## Inquiry delivery
 
-The contact form submits to the Worker endpoint at `/api/inquiry`. Delivery uses [Resend](https://resend.com/):
+The contact form submits to the Worker endpoint at `/api/inquiry`. Delivery uses [Cloudflare Email Service](https://developers.cloudflare.com/email-service/) via a native `send_email` binding — no API keys or third-party services required.
 
-1. Create a Resend account and verify `wendellrowe.com` (or a dedicated sending subdomain).
-2. Create an API key with permission to send email.
-3. Add these Worker secrets in Cloudflare for the production environment:
-   - `RESEND_API_KEY` — the Resend API key.
-   - `INQUIRY_FROM` — a verified sender such as `Wendell Rowe <inquiries@wendellrowe.com>`.
-4. Redeploy or update the Worker secret bindings.
+### One-time setup
 
-Messages are delivered to `hello@wendellrowe.com` with the visitor address in `Reply-To`. Until these two secrets are present, the form keeps the visitor’s message and offers an explicit Open email draft link. Failed network or provider requests also preserve the draft; no successful send is reported on those paths.
+1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Sending** and onboard `wendellrowe.com`.
+2. Verify the destination address `hello@wendellrowe.com` under **Email Routing** > **Destination Addresses**.
+3. Redeploy the Worker (or push to `main` for auto-deploy).
+
+Messages are delivered to `hello@wendellrowe.com` with the visitor's name, organization, email, and message. If the email binding is not yet configured, the form keeps the visitor's message and offers an explicit Open email draft link.
+
+After activation, send a clearly labelled test through the production form and confirm receipt at `hello@wendellrowe.com`. A successful HTTP response alone is not an inbox-delivery test.
 
 
 ## Site structure
@@ -65,8 +66,6 @@ The homepage presents the introduction, selected career results, a concise profi
 
 ## Remaining delivery activation
 
-Production currently needs the existing `RESEND_API_KEY` and `INQUIRY_FROM` Worker secrets. Set them on `wendellrowe-site` in Cloudflare after verifying the sending domain in Resend. Keep the API key out of this repository and chat.
-
-After activation, send a clearly labelled test through the production form and confirm receipt at `hello@wendellrowe.com`, including the visitor address in Reply-To. A successful HTTP response alone is not an inbox-delivery test.
+Production currently needs Cloudflare Email Service enabled for `wendellrowe.com` and the destination address `hello@wendellrowe.com` verified in Email Routing. Enable both in the Cloudflare dashboard under **Compute** > **Email Service**.
 
 The career metrics retain their previously published context; employer and role attribution should be added only when Wendell confirms those details.
