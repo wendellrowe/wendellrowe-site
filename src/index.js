@@ -77,6 +77,7 @@ async function handleInquiry(request, env) {
     await env.EMAIL.send({
       from: "Wendell Rowe <inquiries@wendellrowe.com>",
       to: "hello@wendellrowe.com",
+      replyTo: name ? `${name} <${email}>` : email,
       subject,
       text,
     });
