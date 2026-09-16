@@ -81,7 +81,8 @@ async function handleInquiry(request, env) {
       text,
     });
     return json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error("Inquiry delivery failed:", err?.message || err);
     return json({ error: "We could not send your inquiry. Please try again or email hello@wendellrowe.com." }, 502);
   }
 }

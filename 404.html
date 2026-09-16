@@ -8,14 +8,46 @@
   <title>Page not found — Ŵendell Røẅe™</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/cinzel-latin-wght-normal.woff2">
 </head>
 <body>
-  <main class="not-found section-shell">
+  <a class="skip-link" href="#top">Skip to main content</a>
+  <div aria-hidden="true" class="page-noise"></div>
+  <canvas aria-hidden="true" id="constellation"></canvas>
+  <header class="site-header">
+    <a aria-label="Ŵendell Røẅe™ home" class="brand magnetic" href="/">
+      <img alt="WR monogram" height="38" src="/assets/wr-monogram.svg" width="38"/>
+      <span>Ŵendell Røẅe™</span>
+    </a>
+    <nav aria-label="Primary navigation" class="site-nav" id="site-nav">
+      <a href="/#impact">Impact</a>
+      <a href="/#profile">Profile</a>
+      <a href="/#experience">Experience</a>
+      <a href="/#firm">Firm</a>
+      <a href="/bio">Biography</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+  <main class="not-found section-shell" id="top" tabindex="-1">
     <p class="kicker">Ŵendell Røẅe™ · 404</p>
     <h1>Page not found.</h1>
     <p>The address may have changed. Return to the homepage or start a conversation.</p>
-    <a class="primary-cta" href="/">Return home <span aria-hidden="true">↗</span></a>
-    <p><a href="mailto:hello@wendellrowe.com">Start a conversation</a></p>
+    <a class="primary-cta magnetic" href="/"><span>Return home</span> <span aria-hidden="true">↗</span></a>
+    <p><a class="text-link" href="mailto:hello@wendellrowe.com?subject=Strategic%20Conversation">Start a conversation <span aria-hidden="true">↗</span></a></p>
   </main>
+  <footer>
+    <a aria-label="Ŵendell Røẅe™ home" class="footer-brand" href="/">
+      <img alt="" decoding="async" loading="lazy" src="/assets/wr-monogram.svg"/>
+      <span>Ŵendell Røẅe™</span>
+    </a>
+    <p class="footer-motto">Vincit Qui Se Vincit</p>
+    <div class="footer-links">
+      <a href="mailto:hello@wendellrowe.com?subject=Strategic%20Conversation">Email</a>
+      <a href="/#firm">Firm</a>
+      <a href="/">Home ↑</a>
+    </div>
+    <small>© <span id="year"></span> Rowe Meridian Group℠. All rights reserved.</small>
+  </footer>
+  <script src="/script.js"></script>
 </body>
 </html>
