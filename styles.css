@@ -264,7 +264,10 @@ h2 em { color: var(--gold); font-style: normal; }
   line-height: 1.4;
 }
 .biography-turn { color: var(--gold) !important; font-family: var(--serif); font-size: 1.18rem !important; line-height: 1.5 !important; }
-.biography-close { max-width: 900px; margin: 52px 0 0 auto; padding: 34px 0 0 42px; border-top: 1px solid rgba(198,167,94,.45); }
+.biography-footer { display: grid; grid-template-columns: 1fr minmax(0, 900px); gap: 72px; align-items: center; margin-top: 52px; }
+.biography-footer-logo { display: flex; justify-content: center; align-items: center; }
+.biography-footer-logo img { width: 100%; max-width: 340px; height: auto; aspect-ratio: 1; }
+.biography-close { max-width: none; margin: 0; padding: 34px 0 0 42px; border-top: 1px solid rgba(198,167,94,.45); }
 .biography-close p { margin-bottom: 0; color: var(--ivory); font-family: var(--serif); font-size: clamp(1.2rem, 1.8vw, 1.65rem); line-height: 1.6; }
 .capability-grid, .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
 .capability-grid { grid-template-columns: repeat(4, 1fr); }
@@ -955,8 +958,11 @@ footer { padding-bottom: 110px; }
   .biography-lede { margin-bottom: 32px; font-size: 1.35rem; line-height: 1.5; }
   .biography-columns { display: block; padding-top: 30px; }
   .biography-columns p { font-size: 15px; line-height: 1.8; }
-  .biography-close { margin-top: 32px; padding: 28px 0 0; }
+  .biography-footer { grid-template-columns: 1fr; gap: 36px; margin-top: 32px; }
+  .biography-footer-logo img { max-width: 200px; }
+  .biography-close { margin-top: 0; padding: 28px 0 0; }
   .biography-close p { font-size: 1.18rem; line-height: 1.65; }
+  .biography-actions { display: grid; gap: 16px; }
   .story-stanzas { margin-top: 28px; }
   .career-visual { min-height: 0; margin-bottom: 36px; padding: 28px; }
   .inquiry-purpose { display: grid; grid-template-columns: 1fr; }
@@ -1042,7 +1048,7 @@ body { font-size: 1rem; }
 .bio-page .biography-heading h1 { margin: 0; font: 500 clamp(2.5rem, 5.5vw, 5rem)/1.1 var(--serif); text-transform: uppercase; }
 .bio-page .biography-heading h1 em { color: var(--gold); font-style: normal; }
 .bio-page .biography-copy { max-width: 1160px; }
-.biography-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; margin: 40px 0 0 auto; max-width: 900px; }
+.biography-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; margin-top: 40px; }
 @media (max-width: 1100px) {
   .site-header { height: 76px; padding-inline: 24px; }
   .menu-toggle { display: grid; grid-template-columns: 25px auto; gap: 10px; align-items: center; z-index: 60; min-width: 88px; min-height: 44px; }
@@ -1067,5 +1073,5 @@ body { font-size: 1rem; }
   .contact-email-link { width: max-content; }
   .bio-page { padding-top: 112px; padding-bottom: 56px; }
   .bio-page .biography-columns p { font-size: 1rem; }
-  .biography-actions { display: grid; gap: 16px; margin: 32px 0 0 auto; max-width: 100%; }
+  .biography-actions { display: grid; gap: 16px; }
 }
