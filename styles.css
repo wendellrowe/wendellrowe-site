@@ -265,8 +265,28 @@ h2 em { color: var(--gold); font-style: normal; }
 }
 .biography-turn { color: var(--gold) !important; font-family: var(--serif); font-size: 1.18rem !important; line-height: 1.5 !important; }
 .biography-footer { display: grid; grid-template-columns: 1fr minmax(0, 900px); gap: 72px; align-items: center; margin-top: 52px; }
-.biography-footer-logo { display: flex; justify-content: center; align-items: center; }
-.biography-footer-logo img { width: 100%; max-width: 340px; height: auto; aspect-ratio: 1; }
+.biography-footer-logo { display: flex; justify-content: center; align-items: center; position: relative; }
+.biography-footer-logo::before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  background: radial-gradient(ellipse at 50% 42%, rgba(198,167,94,.2), transparent 64%);
+  pointer-events: none;
+  z-index: 0;
+}
+.biography-footer-logo img {
+  width: 100%; max-width: 340px; height: auto; aspect-ratio: 1;
+  border: 1px solid rgba(198,167,94,.5);
+  outline: 1px solid rgba(198,167,94,.42);
+  outline-offset: -11px;
+  box-shadow: 0 28px 70px rgba(0,0,0,.55);
+  position: relative; z-index: 1;
+  transition: box-shadow 400ms var(--ease), border-color 400ms var(--ease);
+}
+.biography-footer-logo:hover img {
+  border-color: rgba(198,167,94,.8);
+  box-shadow: 0 32px 80px rgba(0,0,0,.6), 0 0 30px rgba(198,167,94,.12);
+}
 .biography-close { max-width: none; margin: 0; padding: 34px 0 0 42px; border-top: 1px solid rgba(198,167,94,.45); }
 .biography-close p { margin-bottom: 0; color: var(--ivory); font-family: var(--serif); font-size: clamp(1.2rem, 1.8vw, 1.65rem); line-height: 1.6; }
 .capability-grid, .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
