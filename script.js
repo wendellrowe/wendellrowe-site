@@ -8,7 +8,8 @@
   const spotlight = document.querySelector('.spotlight');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  document.getElementById('year').textContent = new Date().getFullYear();
+  const yearNode = document.getElementById('year');
+  if (yearNode) yearNode.textContent = new Date().getFullYear();
 
   const inquiry = document.querySelector('[data-inquiry]');
   if (inquiry instanceof HTMLFormElement) {
@@ -65,7 +66,8 @@
     menuToggle?.setAttribute('aria-expanded', 'false');
     nav.classList.remove('is-open');
     body.classList.remove('menu-open');
-    document.querySelector(link.getAttribute('href'))?.focus({ preventScroll: true });
+    const destination = link.getAttribute('href');
+    if (destination?.startsWith('#')) document.getElementById(destination.slice(1))?.focus({ preventScroll: true });
   }));
 
   const closeMenu = () => {
