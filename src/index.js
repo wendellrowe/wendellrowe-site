@@ -7,29 +7,19 @@ export default {
     }
     if (url.pathname === "/api/inquiry") return handleInquiry(request, env);
     const response = await env.ASSETS.fetch(request);
-    if (response.status !== 404) {
-      if ((url.pathname === "/" || url.pathname === "/index.html") && response.headers.get("content-type")?.includes("text/html")) {
-        return centerCareerCrest(response);
-      }
-      return response;
-    }
-    const notFound = await env.ASSETS.fetch(new Request(new URL("/404.html", url), request));
+    if (response.status !== 404) return response;
+
+    // Serve the branded 404 page. Request "/404" (not "/404.html"): with
+    // html_handling "auto-trailing-slash", "/404.html" answers with a 307 to
+    // "/404" and an empty body, which used to make every missing page blank.
+    const notFound = await env.ASSETS.fetch(new Request(new URL("/404", url)));
     const headers = new Headers(notFound.headers);
+    headers.delete("location");
     headers.set("X-Robots-Tag", "noindex");
+    headers.set("Cache-Control", "no-store");
     return new Response(request.method === "HEAD" ? null : notFound.body, { status: 404, headers });
   },
 };
-
-async function centerCareerCrest(response) {
-  const html = await response.text();
-  const style = `<style id="career-crest-centering">#experience .career-visual{justify-content:center}</style>`;
-  const body = html.includes("</head>") ? html.replace("</head>", `${style}</head>`) : html;
-  const headers = new Headers(response.headers);
-  headers.delete("content-length");
-  headers.delete("etag");
-  headers.set("cache-control", "no-cache");
-  return new Response(body, { status: response.status, statusText: response.statusText, headers });
-}
 
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), {

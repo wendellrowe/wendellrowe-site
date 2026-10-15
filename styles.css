@@ -21,6 +21,7 @@
   --sans: "Inter", Arial, sans-serif;
   --max: 1440px;
   --ease: cubic-bezier(.22,1,.36,1);
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; overflow-x: clip; }
@@ -188,7 +189,7 @@ img { max-width: 100%; display: block; }
 .hero-index { position: absolute; left: 0; bottom: 38px; display: flex; align-items: flex-end; gap: 14px; }
 .hero-index span { color: var(--gold); font-family: var(--serif); font-size: 12px; }
 .hero-index p { margin: 0; color: #99968e; font-size: 8px; letter-spacing: .22em; text-transform: uppercase; }
-.scroll-cue { position: absolute; right: 0; bottom: 25px; color: #77736b; font-size: 8px; letter-spacing: .28em; text-transform: uppercase; }
+.scroll-cue { position: absolute; left: 50%; bottom: 25px; transform: translateX(-50%); color: #77736b; font-size: 8px; letter-spacing: .28em; text-transform: uppercase; }
 .marquee { overflow: hidden; padding: 25px 0; border-top: 1px solid rgba(255,255,255,.055); border-bottom: 1px solid rgba(255,255,255,.055); }
 .marquee-track { width: max-content; display: flex; align-items: center; gap: 33px; animation: marquee 28s linear infinite; }
 .marquee span { font-family: var(--serif); text-transform: uppercase; letter-spacing: .12em; color: rgba(238,233,223,.5); }
@@ -287,7 +288,8 @@ h2 em { color: var(--gold); font-style: normal; }
   border-color: rgba(198,167,94,.8);
   box-shadow: 0 32px 80px rgba(0,0,0,.6), 0 0 30px rgba(198,167,94,.12);
 }
-.biography-close { max-width: none; margin: 0; padding: 34px 0 0 42px; border-top: 1px solid rgba(198,167,94,.45); }
+.biography-close { max-width: none; margin: 18px 0 0; padding: 34px 0 0; border-top: 1px solid rgba(198,167,94,.45); }
+.biography-close .biography-motto { margin-top: 22px; color: var(--gold); font-size: .95rem; letter-spacing: .14em; text-transform: uppercase; }
 .biography-close p { margin-bottom: 0; color: var(--ivory); font-family: var(--serif); font-size: clamp(1.2rem, 1.8vw, 1.65rem); line-height: 1.6; }
 .capability-grid, .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
 .capability-grid { grid-template-columns: repeat(4, 1fr); }
@@ -295,7 +297,7 @@ h2 em { color: var(--gold); font-style: normal; }
 .capability-card:hover, .impact-grid article:hover { background: rgba(198,167,94,.035); }
 .capability-card h3, .impact-grid h3, .timeline h3, .principles-list h3 { font-family: var(--serif); text-transform: uppercase; }
 .career { display: grid; grid-template-columns: .85fr 1fr; gap: 80px; align-items: center; }
-.career-visual { min-height: 620px; padding: 48px 40px 40px; position: relative; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; }
+.career-visual { min-height: 620px; padding: 48px 40px 40px; position: relative; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .career-visual p { position: relative; z-index: 1; font-family: var(--serif); text-transform: uppercase; }
 .career-visual span { color: var(--gold); font-size: 8px; letter-spacing: .28em; text-transform: uppercase; }
 .timeline article { padding: 0 0 36px 34px; margin-bottom: 24px; border-left: 1px solid var(--line); }

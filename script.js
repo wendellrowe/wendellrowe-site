@@ -375,27 +375,31 @@
   }
 
   if (!reduceMotion && window.matchMedia('(pointer:fine)').matches) {
-    let mouseX = -100, mouseY = -100, ringX = -100, ringY = -100;
-    window.addEventListener('mousemove', (event) => {
-      mouseX = event.clientX;
-      mouseY = event.clientY;
-      cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-      spotlight.style.left = `${mouseX}px`;
-      spotlight.style.top = `${mouseY}px`;
-      spotlight.style.opacity = '1';
-    });
-    const renderCursor = () => {
-      ringX += (mouseX - ringX) * .14;
-      ringY += (mouseY - ringY) * .14;
-      cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-      requestAnimationFrame(renderCursor);
-    };
-    renderCursor();
+    // The biography and 404 pages have no custom cursor elements; without this
+    // guard the script threw here and the buttons below never became magnetic.
+    if (cursorDot && cursorRing && spotlight) {
+      let mouseX = -100, mouseY = -100, ringX = -100, ringY = -100;
+      window.addEventListener('mousemove', (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+        cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+        spotlight.style.left = `${mouseX}px`;
+        spotlight.style.top = `${mouseY}px`;
+        spotlight.style.opacity = '1';
+      });
+      const renderCursor = () => {
+        ringX += (mouseX - ringX) * .14;
+        ringY += (mouseY - ringY) * .14;
+        cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+        requestAnimationFrame(renderCursor);
+      };
+      renderCursor();
 
-    document.querySelectorAll('a, button, [data-tilt]').forEach(el => {
-      el.addEventListener('mouseenter', () => cursorRing.classList.add('is-active'));
-      el.addEventListener('mouseleave', () => cursorRing.classList.remove('is-active'));
-    });
+      document.querySelectorAll('a, button, [data-tilt]').forEach(el => {
+        el.addEventListener('mouseenter', () => cursorRing.classList.add('is-active'));
+        el.addEventListener('mouseleave', () => cursorRing.classList.remove('is-active'));
+      });
+    }
 
     const ctaMotionReference = document.querySelector('.hero .primary-cta') || document.querySelector('.primary-cta');
     document.querySelectorAll('.magnetic').forEach(el => {
