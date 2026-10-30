@@ -1097,3 +1097,41 @@ body { font-size: 1rem; }
   .bio-page .biography-columns p { font-size: 1rem; }
   .biography-actions { display: grid; gap: 16px; }
 }
+
+/* Executive experience refinement */
+.hero-credentials {
+  margin: 18px 0 0;
+  max-width: 39rem;
+  color: #c9c3b8;
+  font-size: clamp(.75rem, .95vw, .875rem);
+  line-height: 1.8;
+  letter-spacing: .085em;
+  text-transform: uppercase;
+}
+.hero-credentials span { color: var(--gold); padding-inline: .25em; }
+.hero-secondary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .6em;
+  width: fit-content;
+  min-height: 44px;
+  margin-top: 12px;
+  color: var(--ivory);
+  border-bottom: 1px solid var(--line);
+  font-size: .875rem;
+  letter-spacing: .045em;
+  transition: color 180ms var(--ease), border-color 180ms var(--ease);
+}
+.hero-secondary-link:hover { color: var(--gold); border-color: var(--gold); }
+:where(a, button, input, textarea, summary):focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 5px;
+}
+@media (max-width: 760px) {
+  .hero-credentials { font-size: .72rem; letter-spacing: .06em; }
+  .hero-secondary-link { margin-top: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-secondary-link { transition: none; }
+}
