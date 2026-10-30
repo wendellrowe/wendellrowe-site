@@ -95,6 +95,10 @@
     }
   });
   window.matchMedia('(max-width: 1100px)').addEventListener('change', closeMenu);
+  document.addEventListener('pointerdown', event => {
+    if (menuToggle?.getAttribute('aria-expanded') !== 'true') return;
+    if (!nav?.contains(event.target) && !menuToggle.contains(event.target)) closeMenu();
+  });
 
   const navLinks = [...(nav?.querySelectorAll('a[href^="#"]') || [])];
   const navSections = navLinks
